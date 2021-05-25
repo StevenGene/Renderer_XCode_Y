@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70B75CB3265D1A6B00BCA254 /* rasterizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 70B75CAE265D1A6A00BCA254 /* rasterizer.cpp */; };
+		70B75CB4265D1A6B00BCA254 /* Triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 70B75CB1265D1A6B00BCA254 /* Triangle.cpp */; };
 		70FFBB7F265CA63200136862 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 70FFBB7E265CA63200136862 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		70B75CAE265D1A6A00BCA254 /* rasterizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rasterizer.cpp; sourceTree = "<group>"; };
+		70B75CAF265D1A6A00BCA254 /* global.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = global.hpp; sourceTree = "<group>"; };
+		70B75CB0265D1A6B00BCA254 /* rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rasterizer.hpp; sourceTree = "<group>"; };
+		70B75CB1265D1A6B00BCA254 /* Triangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Triangle.cpp; sourceTree = "<group>"; };
+		70B75CB2265D1A6B00BCA254 /* Triangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Triangle.hpp; sourceTree = "<group>"; };
 		70FFBB7B265CA63200136862 /* Renderer_Y */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Renderer_Y; sourceTree = BUILT_PRODUCTS_DIR; };
 		70FFBB7E265CA63200136862 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +65,11 @@
 			isa = PBXGroup;
 			children = (
 				70FFBB7E265CA63200136862 /* main.cpp */,
+				70B75CAF265D1A6A00BCA254 /* global.hpp */,
+				70B75CAE265D1A6A00BCA254 /* rasterizer.cpp */,
+				70B75CB0265D1A6B00BCA254 /* rasterizer.hpp */,
+				70B75CB1265D1A6B00BCA254 /* Triangle.cpp */,
+				70B75CB2265D1A6B00BCA254 /* Triangle.hpp */,
 			);
 			path = Renderer_Y;
 			sourceTree = "<group>";
@@ -119,6 +131,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70B75CB3265D1A6B00BCA254 /* rasterizer.cpp in Sources */,
+				70B75CB4265D1A6B00BCA254 /* Triangle.cpp in Sources */,
 				70FFBB7F265CA63200136862 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
