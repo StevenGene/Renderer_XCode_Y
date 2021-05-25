@@ -60,6 +60,7 @@ int main(int argc, const char * argv[]) {
     printf("%f,%f,%f \n",d.x(),d.y(),d.z());
     
     printf("\n\n");
+    
 
     std::vector<Eigen::Vector4f> frameBuffer(PIC_WIDTH * PIC_HEIGHT,Eigen::Vector4f(0.5,0.5,0.5,1));
     SaveBmp (frameBuffer, PIC_WIDTH, PIC_HEIGHT, "output1.bmp");
