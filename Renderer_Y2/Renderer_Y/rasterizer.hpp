@@ -67,7 +67,9 @@ namespace rst
         void set_projection(const Eigen::Matrix4f& p);
 
         void set_pixel(const Eigen::Vector3f& point, const Eigen::Vector3f& color);
-
+        
+        float getDepth(int x,int y);
+        void setDepth(int x,int y,float depth);
         void clear(Buffers buff);
 
         void draw(pos_buf_id pos_buffer, ind_buf_id ind_buffer, col_buf_id col_buffer, Primitive type);
@@ -99,5 +101,6 @@ namespace rst
 
         int next_id = 0;
         int get_next_id() { return next_id++; }
+        
     };
 }

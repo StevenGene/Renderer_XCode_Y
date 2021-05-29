@@ -74,30 +74,26 @@ Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio, float z
     float n = zNear;
     float f = zFar;
     Eigen::Matrix4f projection = Eigen::Matrix4f::Identity();
-
-    // TODO: Implement this function
-    // Create the projection matrix for the given parameters.
-    // Then return it.
     Eigen::Matrix4f P2O = Eigen::Matrix4f::Identity();
     P2O<<n, 0, 0, 0,
          0, n, 0, 0,
          0, 0, n+f,(-1)*f*n,
          0, 0, 1, 0;
 
-//    float halfRadian = eye_fov / 2.0 / 180.0 * 3.1415;
-//    float t = tan(halfRadian) * n;
-//    float b = -1 * t;
-//    float r = aspect_ratio * t;
-//    float l = -1 * r;
+    float halfRadian = eye_fov / 2.0 / 180.0 * 3.1415;
+    float t = tan(halfRadian) * n;
+    float b = -t;
+    float r = aspect_ratio * t;
+    float l = -r;
 
 
 
 
-     float halfEyeAngelRadian = eye_fov/2.0/180.0*3.1415;
-     float t = n*std::tan(halfEyeAngelRadian);
-     float r=t*aspect_ratio;
-     float l=(-1)*r;
-     float b=(-1)*t;
+//     float halfEyeAngelRadian = eye_fov/2.0/180.0*3.1415;
+//     float t = n*std::tan(halfEyeAngelRadian);
+//     float r=t*aspect_ratio;
+//     float l=(-1)*r;
+//     float b=(-1)*t;
 
     Eigen::Matrix4f ortho1=Eigen::Matrix4f::Identity();
     ortho1<<2/(r-l),0,0,0,
@@ -132,7 +128,7 @@ int main(int argc, const char** argv)
     Eigen::Vector3f eye_pos = {0,0,5};
 
 
-    std::vector<Eigen::Vector3f> pos
+    std::vector<Eigen::Vector3f> poses
             {
                     {2, 0, -2},
                     {0, 2, -2},
@@ -142,13 +138,13 @@ int main(int argc, const char** argv)
                     {-1, 0.5, -5}
             };
 
-    std::vector<Eigen::Vector3i> ind
+    std::vector<Eigen::Vector3i> indexes
             {
                     {0, 1, 2},
                     {3, 4, 5}
             };
 
-    std::vector<Eigen::Vector3f> cols
+    std::vector<Eigen::Vector3f> colors
             {
                     {217.0, 238.0, 185.0},
                     {217.0, 238.0, 185.0},
@@ -158,9 +154,9 @@ int main(int argc, const char** argv)
                     {185.0, 217.0, 238.0}
             };
 
-    auto pos_id = r.load_positions(pos);
-    auto ind_id = r.load_indices(ind);
-    auto col_id = r.load_colors(cols);
+    auto pos_id = r.load_positions(poses);
+    auto ind_id = r.load_indices(indexes);
+    auto col_id = r.load_colors(colors);
 
     int key = 0;
     int frame_count = 0;
@@ -202,7 +198,7 @@ int main(int argc, const char** argv)
 //        std::vector<Eigen::Vector3f> frameBuffer(PIC_WIDTH * PIC_HEIGHT,Eigen::Vector3f(0.5,0.5,0.5));
 //            SaveBmp (frameBuffer , PIC_WIDTH, PIC_HEIGHT, "output1.bmp");
 
-        SaveBmp (r.frame_buffer() , PIC_WIDTH, PIC_HEIGHT, "output1.bmp");
+        SaveBmp (r.frame_buffer() , PIC_WIDTH, PIC_HEIGHT, "output2.png");
         
         std::cout << "frame count: " << frame_count++ << '\n';
         break;
@@ -210,12 +206,4 @@ int main(int argc, const char** argv)
 
     return 0;
 }
-
-//int main(int argc, const char * argv[]) {
-//
-//    std::vector<Eigen::Vector4f> frameBuffer(PIC_WIDTH * PIC_HEIGHT,Eigen::Vector4f(0.5,0.5,0.5,1));
-//    SaveBmp (frameBuffer, PIC_WIDTH, PIC_HEIGHT, "output1.bmp");
-//
-//    return 0;
-//}
 

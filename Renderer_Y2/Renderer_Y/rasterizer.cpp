@@ -65,15 +65,15 @@ void rst::rasterizer::draw(pos_buf_id pos_buffer, ind_buf_id ind_buffer, col_buf
     float f2 = (50 + 0.1) / 2.0;
 
     Eigen::Matrix4f mvp = projection * view * model;
-    for (auto& i : ind)
+    for (auto& vertexVec : ind)
     {
-        Triangle t;
+        Triangle triangle;
         Eigen::Vector4f v[] = {
-                mvp * to_vec4(buf[i[0]], 1.0f),
-                mvp * to_vec4(buf[i[1]], 1.0f),
-                mvp * to_vec4(buf[i[2]], 1.0f)
+                mvp * to_vec4(buf[vertexVec[0]], 1.0f),
+                mvp * to_vec4(buf[vertexVec[1]], 1.0f),
+                mvp * to_vec4(buf[vertexVec[2]], 1.0f)
         };
-        //Homogeneous division
+        //Homogeneous
         for (auto& vec : v) {
             vec /= vec.w();
         }
@@ -82,25 +82,29 @@ void rst::rasterizer::draw(pos_buf_id pos_buffer, ind_buf_id ind_buffer, col_buf
         {
             vert.x() = 0.5*width*(vert.x()+1.0);
             vert.y() = 0.5*height*(vert.y()+1.0);
-            vert.z() = vert.z() * f1 + f2;
+//            vert.z() = vert.z() * f1 + f2;
+            vert.z() = vert.z() * 100 + 101;
         }
 
         for (int i = 0; i < 3; ++i)
         {
-            t.setVertex(i, v[i].head<3>());
-            t.setVertex(i, v[i].head<3>());
-            t.setVertex(i, v[i].head<3>());
+//            triangle.setVertex(i, v[i].head<3>());
+//            triangle.setVertex(i, v[i].head<3>());
+//            triangle.setVertex(i, v[i].head<3>());
+            
+            triangle.setVertex(i,{v[i].x(),v[i].y(),v[i].z()});
+
         }
 
-        auto col_x = col[i[0]];
-        auto col_y = col[i[1]];
-        auto col_z = col[i[2]];
+        auto col_x = col[vertexVec[0]];
+        auto col_y = col[vertexVec[1]];
+        auto col_z = col[vertexVec[2]];
         
-        t.setColor(0, col_x[0], col_x[1], col_x[2]);
-        t.setColor(1, col_y[0], col_y[1], col_y[2]);
-        t.setColor(2, col_z[0], col_z[1], col_z[2]);
+        triangle.setColor(0, col_x[0], col_x[1], col_x[2]);
+        triangle.setColor(1, col_y[0], col_y[1], col_y[2]);
+        triangle.setColor(2, col_z[0], col_z[1], col_z[2]);
 
-        rasterize_triangle(t);
+        rasterize_triangle(triangle);
         
         // settings x
 //        Triangle test;
@@ -123,14 +127,19 @@ void rst::rasterizer::draw(pos_buf_id pos_buffer, ind_buf_id ind_buffer, col_buf
 //Screen space rasterization
 void rst::rasterizer::rasterize_triangle(const Triangle& t) {
 //    auto v = t.toVector4();
+    std::vector<Vector4f> v;
+    
+    v.push_back({t.v[0].x(),t.v[0].y(),t.v[0].z(),1});
+    v.push_back({t.v[1].x(),t.v[1].y(),t.v[1].z(),1});
+    v.push_back({t.v[2].x(),t.v[2].y(),t.v[2].z(),1});
     //
 /*
- {2, 0, -2},
-                    {0, 2, -2},
-                    {-2, 0, -2},
-                    {3.5, -1, -5},
-                    {2.5, 1.5, -5},
-                    {-1, 0.5, -5}
+        {2, 0, -2},
+        {0, 2, -2},
+        {-2, 0, -2},
+        {3.5, -1, -5},
+        {2.5, 1.5, -5},
+        {-1, 0.5, -5}
  */
     auto xmin = std::min(t.v[0].x(), t.v[1].x());
     xmin = std::min(xmin, t.v[2].x());
@@ -169,14 +178,23 @@ void rst::rasterizer::rasterize_triangle(const Triangle& t) {
             
             Eigen::Vector3f pt(i,j,1);
             if ((ret1 > 0 && ret2 > 0 && ret3 > 0) || (ret1 < 0 && ret2 < 0 && ret3 < 0))  {
-                auto color = t.getColor();
-                set_pixel(pt, color);
-                tick++;
-                if (tick > 50) {
-                    tick = 0;
-                    printf("x:%f,y:%f,r:%f,g:%f,b:%f ",pt.x(),pt.y(),color.x(),color.y(),color.z());
-                }
                 
+//                auto v = t.v;
+                auto[alpha, beta, gamma] = computeBarycentric2D(i, j, t.v);
+                float w_reciprocal = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
+                float z_interpolated = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
+                z_interpolated *= w_reciprocal;
+                if (getDepth(i, j) > z_interpolated)
+                {
+                    auto color = t.getColor();
+                    set_pixel(pt, color);
+                    setDepth(i, j, z_interpolated);
+                    tick++;
+                    if (tick > 50) {
+                        tick = 0;
+    //                    printf("x:%f,y:%f,r:%f,g:%f,b:%f ",pt.x(),pt.y(),color.x(),color.y(),color.z());
+                    }
+                }
             }else{
                 Vector3f tmpColor(0,0,0);
 //                set_pixel(pt, tmpColor);
@@ -184,17 +202,28 @@ void rst::rasterizer::rasterize_triangle(const Triangle& t) {
         }
     }
 
-    
+
     // TODO : Find out the bou.nding box of current triangle.
     // iterate through the pixel and find if the current pixel is inside the triangle
 
     // If so, use the following code to get the interpolated z value.
-    //auto[alpha, beta, gamma] = computeBarycentric2D(x, y, t.v);
-    //float w_reciprocal = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
-    //float z_interpolated = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
-    //z_interpolated *= w_reciprocal;
+//    auto[alpha, beta, gamma] = computeBarycentric2D(x, y, t.v);
+//    float w_reciprocal = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
+//    float z_interpolated = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
+//    z_interpolated *= w_reciprocal;
 
     // TODO : set the current pixel (use the set_pixel function) to the color of the triangle (use getColor function) if it should be painted.
+}
+
+float rst::rasterizer::getDepth(int x,int y)
+{
+    long index = width * y + x;
+    return depth_buf[index];
+}
+
+void rst::rasterizer:: setDepth(int x,int y,float depth){
+    long index = width * y + x;
+    depth_buf[index] = depth;
 }
 
 void rst::rasterizer::set_model(const Eigen::Matrix4f& m)
