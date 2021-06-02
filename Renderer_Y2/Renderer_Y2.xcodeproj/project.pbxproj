@@ -30,7 +30,7 @@
 		70B75CB0265D1A6B00BCA254 /* rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rasterizer.hpp; sourceTree = "<group>"; };
 		70B75CB1265D1A6B00BCA254 /* Triangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Triangle.cpp; sourceTree = "<group>"; };
 		70B75CB2265D1A6B00BCA254 /* Triangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Triangle.hpp; sourceTree = "<group>"; };
-		70FFBB7B265CA63200136862 /* Renderer_Y */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Renderer_Y; sourceTree = BUILT_PRODUCTS_DIR; };
+		70FFBB7B265CA63200136862 /* Renderer_Y2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Renderer_Y2; sourceTree = BUILT_PRODUCTS_DIR; };
 		70FFBB7E265CA63200136862 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -56,7 +56,7 @@
 		70FFBB7C265CA63200136862 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				70FFBB7B265CA63200136862 /* Renderer_Y */,
+				70FFBB7B265CA63200136862 /* Renderer_Y2 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -77,9 +77,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		70FFBB7A265CA63200136862 /* Renderer_Y */ = {
+		70FFBB7A265CA63200136862 /* Renderer_Y2 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 70FFBB82265CA63200136862 /* Build configuration list for PBXNativeTarget "Renderer_Y" */;
+			buildConfigurationList = 70FFBB82265CA63200136862 /* Build configuration list for PBXNativeTarget "Renderer_Y2" */;
 			buildPhases = (
 				70FFBB77265CA63200136862 /* Sources */,
 				70FFBB78265CA63200136862 /* Frameworks */,
@@ -89,9 +89,9 @@
 			);
 			dependencies = (
 			);
-			name = Renderer_Y;
+			name = Renderer_Y2;
 			productName = Renderer_Y;
-			productReference = 70FFBB7B265CA63200136862 /* Renderer_Y */;
+			productReference = 70FFBB7B265CA63200136862 /* Renderer_Y2 */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -108,7 +108,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 70FFBB76265CA63200136862 /* Build configuration list for PBXProject "Renderer_Y" */;
+			buildConfigurationList = 70FFBB76265CA63200136862 /* Build configuration list for PBXProject "Renderer_Y2" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -121,7 +121,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				70FFBB7A265CA63200136862 /* Renderer_Y */,
+				70FFBB7A265CA63200136862 /* Renderer_Y2 */,
 			);
 		};
 /* End PBXProject section */
@@ -270,7 +270,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		70FFBB76265CA63200136862 /* Build configuration list for PBXProject "Renderer_Y" */ = {
+		70FFBB76265CA63200136862 /* Build configuration list for PBXProject "Renderer_Y2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				70FFBB80265CA63200136862 /* Debug */,
@@ -279,7 +279,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		70FFBB82265CA63200136862 /* Build configuration list for PBXNativeTarget "Renderer_Y" */ = {
+		70FFBB82265CA63200136862 /* Build configuration list for PBXNativeTarget "Renderer_Y2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				70FFBB83265CA63200136862 /* Debug */,

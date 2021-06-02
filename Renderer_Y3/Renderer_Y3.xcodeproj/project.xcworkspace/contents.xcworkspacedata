@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Renderer_Y.xcodeproj">
+      location = "self:/Users/st/Project/Others/github/Renderer_XCode_Y/Renderer_Y3/Renderer_Y3.xcodeproj">
    </FileRef>
 </Workspace>
